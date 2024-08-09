@@ -1,0 +1,116 @@
+@import 'https://fonts.googleapis.com/css?family=Share+Tech+Mono';
+@font-face {
+  font-family: 'Digital';
+  src: url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot');
+  src: url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.eot?#iefix')
+      format('embedded-opentype'),
+    url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff2')
+      format('woff2'),
+    url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.woff')
+      format('woff'),
+    url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.ttf')
+      format('truetype'),
+    url('//db.onlinewebfonts.com/t/8e22783d707ad140bffe18b2a3812529.svg#Digital-7')
+      format('svg');
+}
+
+.App {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: grey;
+  }
+  
+  .calculator {
+    background-color: #7d7d7d;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 40%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .calculator-display {
+    background-color: #222;
+    color: #fdfff8;
+    font-size: 2em;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: right;
+    height: 20%;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: 'digital';
+    overflow: hidden;
+  }
+
+  .division {
+    font-size: 3.5em !important;
+  }
+
+  #display-answer {
+    font-size: 4rem;
+  }
+
+  #display-formula {
+    font-size: 2.25rem;
+  }
+  
+  .calculator-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+  }
+
+  .side {
+    background-color: rgb(255, 176, 72) !important;
+  }
+  
+  .button, .ac-button, .equal-button, .zero-button, .add-button {
+    width: 25%;
+    height: 20%;
+    font-size: 2.5em;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+
+  .add-button {
+    height: 20%;
+    width: 25%;
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+  
+  .ac-button {
+    width: 75%;
+  }
+  
+  .zero-button {
+    width: 50%;
+  }
+  .equal-button, .zero-button {
+    flex-direction: row;
+  }
+
+  
+  .button , .zero-button {
+    background-color: #9f9f9f;
+  }
+  
+  .ac-button {
+    background-color: #ff6666;
+
+  }
+  
+  .equal-button {
+    background-color: #66b3ff;
+
+  }
+  
+  .button:hover, .ac-button:hover, .equal-button:hover, .add-button:hover, .zero-button:hover {
+    opacity: 0.8;
+  }
