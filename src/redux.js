@@ -36,9 +36,9 @@ export const calculate = () => ({
 
 // Reducer
 const initialState = {
-  formula: '',
+  formula: '0',
   mutableFormula: '',
-  answer: '',
+  answer: '0',
   clearText: 'AC',
   // Memory
   prevButton: '',
@@ -60,20 +60,24 @@ const calculatorReducer = (state = initialState, action) => {
           mutableFormula: state.formula.slice(0, -1),
           answer: state.prevAnswer,
           lastButtonEqual: false,
+          clearText: 'C',
         }
       } else {
         return {
           ...state,
-          formula: '',
-          answer: '',
+          formula: '0',
+          answer: '0',
           mutableFormula: '',
           prevButton: '',
           lastButtonEqual: false,
+          clearText: 'AC',
         };
       }
       
     case INPUT_NUMBER:
       const firstNumber = state.answer[0];
+      const secondtNumber = state.answer[1];
+      console.log('State Foruma:', state.formula);
       if (firstNumber === '0' && state.formula.length === 1) {
         return {
           ...state,
@@ -84,6 +88,16 @@ const calculatorReducer = (state = initialState, action) => {
           prevButton: action.payload,
           lastButtonEqual: false,
         };
+
+      } else if (secondtNumber === '.' && state.formula.length !== 1) {
+        return {
+          ...state,
+          formula: state.formula + action.payload,
+          answer: state.answer + action.payload,
+          mutableFormula: state.mutableFormula + action.payload,
+          prevButton: action.payload,
+          lastButtonEqual: false
+        };
       } else if (firstNumber === '0' && state.formula.length !== 1) {
         return {
           ...state,
@@ -93,6 +107,7 @@ const calculatorReducer = (state = initialState, action) => {
           mutableFormula: action.payload,
           prevButton: action.payload,
           lastButtonEqual: false,
+          clearText: 'C',
         }
       } else {
         return {
@@ -103,6 +118,7 @@ const calculatorReducer = (state = initialState, action) => {
           mutableFormula: state.mutableFormula + action.payload,
           prevButton: action.payload,
           lastButtonEqual: false,
+          clearText: 'C',
         };
       }
     case INPUT_OPERATOR:
@@ -139,7 +155,9 @@ const calculatorReducer = (state = initialState, action) => {
       } 
       return state;
     case INPUT_DECIMAL:
-      if (state.formula === '') {
+      console.log('State Foruma:', state.formula);
+
+      if (state.formula === '0') {
         return {
           ...state,
           formula: '0.',
@@ -147,6 +165,7 @@ const calculatorReducer = (state = initialState, action) => {
           mutableFormula: '0.',
           prevButton: action.payload,
           lastButtonEqual: false,
+          prevAnswer: '0.',
         };
       } else if (!state.formula.includes('.')) {
         return {
