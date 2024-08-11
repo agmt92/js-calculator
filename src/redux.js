@@ -7,6 +7,7 @@ const INPUT_OPERATOR = 'INPUT_OPERATOR';
 const INPUT_DECIMAL = 'INPUT_DECIMAL';
 const CALCULATE = 'CALCULATE';
 
+
 // To load on codepen.io remove the export keyword and keep the declared consts and read the bottom of the file
 
 export const clear = () => ({
@@ -37,55 +38,74 @@ export const calculate = () => ({
 const initialState = {
   formula: '',
   mutableFormula: '',
-  prevButton: '',
   answer: '',
+  clearText: 'AC',
+  // Memory
+  prevButton: '',
+  prevOperator: '',
+  prevNumber: '',
+  prevAnswer: 'Bug',
 };
 
 const calculatorReducer = (state = initialState, action) => {
   const operators = ['+', '-', '*', '/'];
   switch (action.type) {
     case CLEAR:
-      return {
-        ...state,
-        formula: '',
-        answer: '',
-        mutableFormula: '',
-        prevButton: '',
-      };
+      if (operators.includes(state.formula[state.formula.length - 1]) ) {
+        return {
+          ...state,
+          formula: state.formula.slice(0, -1),
+          mutableFormula: state.formula.slice(0, -1),
+          prevOperator: '',
+          answer: state.prevAnswer,
+        }
+      } else {
+        return {
+          ...state,
+          formula: '',
+          answer: '',
+          mutableFormula: '',
+          prevButton: '',
+        };
+      }
+      
     case INPUT_NUMBER:
-      const firstNumber = state.formula[0];
+      const firstNumber = state.answer[0];
       if (firstNumber === '0' && state.formula.length === 1) {
         return {
           ...state,
           formula: action.payload,
           answer: action.payload,
+          prevAnswer: action.payload,
           mutableFormula: action.payload,
           prevButton: action.payload,
         };
-      } else if (operators.includes(state.formula.length - 1) ) {
-        return {          
+      } else if (firstNumber === '0' && state.formula.length !== 1) {
+        return {
           ...state,
-          formula: action.payload,
+          formula: state.formula.slice(0, -1) + action.payload,
           answer: action.payload,
+          prevAnswer: action.payload,
           mutableFormula: action.payload,
           prevButton: action.payload,
-        };
-      } else{
+        }
+      } else {
         return {
           ...state,
           formula: state.formula + action.payload,
           answer: state.mutableFormula + action.payload,
+          prevAnswer: state.mutableFormula + action.payload,
           mutableFormula: state.mutableFormula + action.payload,
           prevButton: action.payload,
-        }
-      };
+        };
+      }
     case INPUT_OPERATOR:
       if (operators.includes(state.formula[state.formula.length - 1])) {
         return {
           ...state,
           formula: state.formula.slice(0, -1) + action.payload,
           answer: action.payload,
-          mutableFormula: action.payload,
+          mutableFormula: '',
           prevButton: action.payload,
         };
       } else if (state.formula === '' && action.payload === '-') {
@@ -104,7 +124,7 @@ const calculatorReducer = (state = initialState, action) => {
           mutableFormula: '',
           prevButton: action.payload,
         };
-      }
+      } 
       return state;
     case INPUT_DECIMAL:
       if (state.formula === '') {
@@ -140,13 +160,16 @@ const calculatorReducer = (state = initialState, action) => {
             // eslint-disable-next-line no-eval
             answer: eval(state.answer + '*' + state.answer),
           };
-        } else if (state.answer !== state.formula && state.prevButton === '=' ) {
+        } else if (toString(state.answer) === state.formula[state.formula.length - 1]) {
           return {
             ...state,
-            formula: state.answer,
+            // eslint-disable-next-line no-eval
+            formula: eval(state.answer + '*' + state.answer),
+            prevButton: action.payload,
             // eslint-disable-next-line no-eval
             mutableFormula: eval(state.answer + '*' + state.answer),
-            prevButton: action.payload,
+            // eslint-disable-next-line no-eval
+            answer: eval(state.answer + '*' + state.answer),
           };
           } else {
           return {
