@@ -44,7 +44,9 @@ const initialState = {
   prevButton: '',
   prevOperator: '',
   prevNumber: '',
-  prevAnswer: 'Bug',
+  prevAnswer: 'BUG!',
+  // Check if last button was Equal:
+  lastButtonEqual: false,
 };
 
 const calculatorReducer = (state = initialState, action) => {
@@ -56,8 +58,8 @@ const calculatorReducer = (state = initialState, action) => {
           ...state,
           formula: state.formula.slice(0, -1),
           mutableFormula: state.formula.slice(0, -1),
-          prevOperator: '',
           answer: state.prevAnswer,
+          lastButtonEqual: false,
         }
       } else {
         return {
@@ -66,6 +68,7 @@ const calculatorReducer = (state = initialState, action) => {
           answer: '',
           mutableFormula: '',
           prevButton: '',
+          lastButtonEqual: false,
         };
       }
       
@@ -79,6 +82,7 @@ const calculatorReducer = (state = initialState, action) => {
           prevAnswer: action.payload,
           mutableFormula: action.payload,
           prevButton: action.payload,
+          lastButtonEqual: false,
         };
       } else if (firstNumber === '0' && state.formula.length !== 1) {
         return {
@@ -88,6 +92,7 @@ const calculatorReducer = (state = initialState, action) => {
           prevAnswer: action.payload,
           mutableFormula: action.payload,
           prevButton: action.payload,
+          lastButtonEqual: false,
         }
       } else {
         return {
@@ -97,6 +102,7 @@ const calculatorReducer = (state = initialState, action) => {
           prevAnswer: state.mutableFormula + action.payload,
           mutableFormula: state.mutableFormula + action.payload,
           prevButton: action.payload,
+          lastButtonEqual: false,
         };
       }
     case INPUT_OPERATOR:
@@ -107,6 +113,8 @@ const calculatorReducer = (state = initialState, action) => {
           answer: action.payload,
           mutableFormula: '',
           prevButton: action.payload,
+          prevOperator: action.payload,
+          lastButtonEqual: false,
         };
       } else if (state.formula === '' && action.payload === '-') {
         return {
@@ -115,6 +123,8 @@ const calculatorReducer = (state = initialState, action) => {
           answer: action.payload,
           mutableFormula: action.payload,
           prevButton: action.payload,
+          prevOperator: action.payload,
+          lastButtonEqual: false,
         };
       } else if (state.formula !== '' && !operators.includes(state.formula[state.formula.length - 1])) {
         return {
@@ -123,6 +133,8 @@ const calculatorReducer = (state = initialState, action) => {
           answer: action.payload,
           mutableFormula: '',
           prevButton: action.payload,
+          prevOperator: action.payload,
+          lastButtonEqual: false,
         };
       } 
       return state;
@@ -134,6 +146,7 @@ const calculatorReducer = (state = initialState, action) => {
           answer: '0.',
           mutableFormula: '0.',
           prevButton: action.payload,
+          lastButtonEqual: false,
         };
       } else if (!state.formula.includes('.')) {
         return {
@@ -142,45 +155,46 @@ const calculatorReducer = (state = initialState, action) => {
           answer: state.answer + '.',
           mutableFormula: state.mutableFormula + '.',
           prevButton: action.payload,
+          lastButtonEqual: false,
         };
       }
       return state;
-    case CALCULATE:
-      try {
-        // eslint-disable-next-line no-eval
-        const answer = eval(state.formula);
-        if (state.answer === state.formula) {
-          return {
-            ...state,
-            // eslint-disable-next-line no-eval
-            formula: eval(state.answer + '*' + state.answer),
-            prevButton: action.payload,
-            // eslint-disable-next-line no-eval
-            mutableFormula: eval(state.answer + '*' + state.answer),
-            // eslint-disable-next-line no-eval
-            answer: eval(state.answer + '*' + state.answer),
-          };
-        } else if (toString(state.answer) === state.formula[state.formula.length - 1]) {
-          return {
-            ...state,
-            // eslint-disable-next-line no-eval
-            formula: eval(state.answer + '*' + state.answer),
-            prevButton: action.payload,
-            // eslint-disable-next-line no-eval
-            mutableFormula: eval(state.answer + '*' + state.answer),
-            // eslint-disable-next-line no-eval
-            answer: eval(state.answer + '*' + state.answer),
-          };
+      case CALCULATE:
+        try {
+          // eslint-disable-next-line no-eval
+          if (operators.includes(state.formula[state.formula.length - 1])) {
+            const expression = state.prevAnswer + state.prevOperator + state.prevAnswer;
+            const evaluatedExpression = new Function('return ' + expression)();
+            return {
+              ...state,
+              lastButtonEqual: true,
+              formula: evaluatedExpression.toString(),
+              mutableFormula: evaluatedExpression.toString(),
+              answer: evaluatedExpression.toString(),
+            };
+          } else if (state.lastButtonEqual === true) {
+            const expression = state.answer + state.prevOperator + state.prevAnswer;
+            const evaluatedExpression = new Function('return ' + expression)();
+            return {
+              ...state,
+              lastButtonEqual: true,
+              formula: evaluatedExpression.toString(),
+              mutableFormula: evaluatedExpression.toString(),
+              answer: evaluatedExpression.toString(),
+            };
           } else {
-          return {
-            ...state,
-            answer: answer.toString(),
-            mutableFormula: '',
-          };
+            const answer = new Function('return ' + state.formula)();
+            return {
+              ...state,
+              lastButtonEqual: true,
+              answer: answer.toString(),
+              mutableFormula: '',
+            };
+          }
+        } catch (error) {
+          console.error('Calculation error:', error);
+          return state;
         }
-      } catch (error) {
-        return state;
-      }
     default:
       return state;
   }
