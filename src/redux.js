@@ -87,6 +87,7 @@ const calculatorReducer = (state = initialState, action) => {
           mutableFormula: action.payload,
           prevButton: action.payload,
           lastButtonEqual: false,
+          clearText: 'C',
         };
 
       } else if (secondtNumber === '.' && state.formula.length !== 1) {
@@ -96,7 +97,8 @@ const calculatorReducer = (state = initialState, action) => {
           answer: state.answer + action.payload,
           mutableFormula: state.mutableFormula + action.payload,
           prevButton: action.payload,
-          lastButtonEqual: false
+          lastButtonEqual: false,
+          clearText: 'C',
         };
       } else if (firstNumber === '0' && state.formula.length !== 1) {
         return {
@@ -166,6 +168,7 @@ const calculatorReducer = (state = initialState, action) => {
           prevButton: action.payload,
           lastButtonEqual: false,
           prevAnswer: '0.',
+          clearText: 'C',
         };
       } else if (!state.formula.includes('.')) {
         return {
@@ -175,6 +178,7 @@ const calculatorReducer = (state = initialState, action) => {
           mutableFormula: state.mutableFormula + '.',
           prevButton: action.payload,
           lastButtonEqual: false,
+          clearText: 'C',
         };
       }
       return state;

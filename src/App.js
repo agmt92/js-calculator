@@ -30,7 +30,7 @@ class CalculatorButtons extends React.Component {
   render() {
     return (
       <div className="calculator-buttons">
-        <button id="clear" className="ac-button" onClick={this.handleClick}>AC</button>
+        <button id="clear" className="ac-button" onClick={this.handleClick}>{this.props.clearText}</button>
         <button id="divide" className="button division side" onClick={this.handleClick}>/</button>
         <button id="seven" className="button" onClick={this.handleClick}>7</button>
         <button id="eight" className="button" onClick={this.handleClick}>8</button>
@@ -60,7 +60,15 @@ const mapDispatchToProps = {
   calculate,
 };
 
-const ConnectedCalculatorButtons = connect(null, mapDispatchToProps)(CalculatorButtons);
+const mapStateToProps = (state) => {
+  return {
+    formula: state.calculator.formula,
+    answer: state.calculator.answer,
+    clearText: state.calculator.clearText,
+  };
+};
+
+const ConnectedCalculatorButtons = connect(mapStateToProps, mapDispatchToProps)(CalculatorButtons);
 
 class CalculatorDisplay extends React.Component {
   render() {
@@ -73,12 +81,6 @@ class CalculatorDisplay extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    formula: state.calculator.formula,
-    answer: state.calculator.answer,
-  };
-};
 
 const ConnectedCalculatorDisplay = connect(mapStateToProps)(CalculatorDisplay);
 
