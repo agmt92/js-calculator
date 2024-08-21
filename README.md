@@ -1,70 +1,127 @@
-# Getting Started with Create React App
+# JavaScript Calculator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is part of the freeCodeCamp Front End Development Libraries curriculum. It is a JavaScript Calculator built using React and Redux. The calculator allows users to perform basic arithmetic operations.
 
-## Available Scripts
+You can view the live demo of the project [here](https://agmt92.github.io/js-calculator/).
 
-In the project directory, you can run:
+## Table of Contents
 
-### `npm start`
+- Introduction
+- Features
+- [Technologies Used](#technologies-used)
+- [Setup and Installation](#setup-and-installation)
+- Usage
+- [Project Structure](#project-structure)
+- Troubleshooting
+- Contributing
+- License
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Introduction
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The JavaScript Calculator is a web application that provides a simple interface for performing basic arithmetic operations. It is built using React for the user interface and Redux for state management.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Features
 
-### `npm run build`
+- **Basic Arithmetic Operations**: Perform addition, subtraction, multiplication, and division.
+- **Clear Functionality**: Clear the current input and start a new calculation.
+- **Decimal Support**: Perform calculations with decimal numbers.
+- **Responsive Design**: The calculator is responsive and works well on different screen sizes.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technologies Used
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **React**: For building the user interface.
+- **Redux**: For state management.
+- **SCSS**: For styling the application.
+- **Bootstrap**: For responsive design.
+- **JavaScript**: For handling logic and interactions.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Setup and Installation
 
-### `npm run eject`
+To set up and run this project locally, follow these steps:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/your-username/js-calculator.git
+    cd js-calculator
+    ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. **Install dependencies**:
+    ```bash
+    npm install
+    ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. **Start the development server**:
+    ```bash
+    npm start
+    ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+4. **Open the application**:
+    Open your web browser and go to [`http://localhost:3000`](http://localhost:3000).
 
-## Learn More
+## Usage
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **Perform Calculations**: Click the buttons on the calculator to input numbers and operators. Click the "=" button to see the result.
+- **Clear Input**: Click the "AC" button to clear the current input and start a new calculation.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Project Structure
 
-### Code Splitting
+```
+js-calculator/
+│
+├── public/                 # Public assets
+│   ├── index.html          # Main HTML file
+│   └── ...
+│
+├── src/                    # Source files
+│   ├── App.js              # Main App component
+│   ├── App.scss            # SCSS styles
+│   ├── index.js            # Entry point
+│   ├── redux/              # Redux actions and reducers
+│   └── ...
+│
+├── package.json            # Project dependencies and scripts
+└── README.md               # Project documentation
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Troubleshooting
 
-### Analyzing the Bundle Size
+If port 3000 is already in use, you can find the process ID (PID) and kill it using the following steps:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. **Find the PID**:
+    ```bash
+    lsof -i :3000
+    ```
 
-### Making a Progressive Web App
+    This command will list the processes using port 3000. Look for the PID in the output.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+2. **Kill the process**:
+    ```bash
+    kill -9 <PID>
+    ```
 
-### Advanced Configuration
+    Replace `<PID>` with the actual process ID you found in the previous step.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+3. **Restart the server**:
+    ```bash
+    npm start
+    ```
 
-### Deployment
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Contributions are welcome! If you have any suggestions or improvements, please follow these steps:
 
-### `npm run build` fails to minify
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes.
+4. Commit your changes (`git commit -m 'Add some feature'`).
+5. Push to the branch (`git push origin feature-branch`).
+6. Open a pull request.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+---
+
+Thank you for checking out my JavaScript Calculator project! If you have any questions or feedback, feel free to reach out.
